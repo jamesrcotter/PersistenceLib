@@ -1,0 +1,24 @@
+﻿_command = "addGoggles=G_Aviator,"; 
+_split = _command splitString "="; 
+ 
+_unit = player; 
+_function = _split select 0; 
+_kit = _split select 1; 
+_objects = _kit splitString ","; 
+{
+	_params = ["_unit", _function, """" + _x + """"];
+	call compile (_params joinString " ");
+} forEach _objects;
+
+hint format ["%1", _kit];
+
+
+private _str = "player addGoggles ""G_Aviator""";
+private _dta = _str splitString " ";
+call compile (_dta joinString " ");
+
+_call = [_unit, _function, _object] joinString " ";
+
+call compile (_call);
+
+hint format ["%1", _call];

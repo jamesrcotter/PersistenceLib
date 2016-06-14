@@ -1,0 +1,12 @@
+﻿// Add largest backpack so can assign items
+// Do all item assigns
+// Add all weapons
+// Do all weapon item assigns
+// Add headgear
+// Add goggles
+// Add unform
+// Add vest
+// Add backpack
+// Add uniform items
+// Add vest items
+// Add backpack items

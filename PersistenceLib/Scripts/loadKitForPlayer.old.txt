@@ -1,0 +1,138 @@
+﻿fn_kitAddHeadgear = {
+	params ["_unit", "_object"];
+	_unit addHeadgear _object;
+};
+
+fn_kitAddGoggles = {
+	params ["_unit", "_object"];
+	_unit addGoggles _object;
+};
+
+fn_kitAddUniform = {
+	params ["_unit", "_object"];
+	_unit forceAddUniform _object;
+};
+
+fn_kitAddVest = {
+	params ["_unit", "_object"];
+	_unit addVest _object;
+};
+
+fn_kitAddBackpack = {
+	params ["_unit", "_object"];
+	_unit addBackpack _object;
+};
+
+fn_kitAddWeapon = {
+	params ["_unit", "_object"];
+	_unit addWeapon _object;
+};
+
+fn_kitAddAssignedItems = {
+	params ["_unit", "_objects"];
+	_split = _objects splitString ","; 
+	{
+		_unit addItem _x; 
+		_unit assignItem _x;
+	} forEach _split;
+};
+
+fn_kitAddUniformItems = {
+	params ["_unit", "_objects"];
+	_split = _objects splitString ","; 
+	{
+		_unit addItemToUniform _x;
+	} forEach _split;
+};
+
+fn_kitAddVestItems = {
+	params ["_unit", "_objects"];
+	_split = _objects splitString ","; 
+	{
+		_unit addItemToVest _x;
+	} forEach _split;
+};
+
+fn_kitAddBackpackItems = {
+	params ["_unit", "_objects"];
+	_split = _objects splitString ","; 
+	{
+		_unit addItemToBackpack _x;
+	} forEach _split;
+};
+
+fn_kitAddHandgunItems = {
+	params ["_unit", "_objects"];
+	_split = _objects splitString ","; 
+	{
+		_unit addHandgunItem _x; 
+	} forEach _split;
+};
+
+fn_kitAddSecondaryWeaponItems = {
+	params ["_unit", "_objects"];
+	_split = _objects splitString ","; 
+	{
+		_unit addSecondaryWeaponItem _x; 
+	} forEach _split;
+};
+
+fn_kitAddPrimaryWeaponItems = {
+	params ["_unit", "_objects"];
+	_split = _objects splitString ","; 
+	{
+		_unit addPrimaryWeaponItem _x; 
+	} forEach _split;
+};
+
+fn_kitLoad = {
+	params ["_unit", "_kitName"];
+
+	_params = [_unit];
+	_params call fn_kitRemoveAll;
+
+	_id = getPlayerUID _unit;
+	_result = "";
+
+	_response = "PersistenceLib" callExtension "loadKit " + _id + "~" + _kitName;
+
+	if not (_response == "") then
+	{
+		_kit = _response splitString "|";
+		{
+			_split = _x splitString "="; 
+			_function = _split select 0; 
+			_object = _split select 1; 
+
+			_params = [_unit, _object];
+			_params call call compile _function;
+		
+		} forEach _kit;
+
+		_result = "Done.";
+	};
+
+	_result;	
+};
+
+fn_kitRemoveAll = {
+	params["_unit"];
+
+	removeAllAssignedItems _unit;
+	removeAllItems _unit;
+	removeAllWeapons _unit;
+	removeVest _unit;
+	removeUniform _unit;
+	removeBackpack _unit;
+	removeGoggles _unit;
+	removeHeadgear _unit;
+};
+
+private _unit = player;
+private _kitName = "tempKit";
+
+_params = [_unit, _kitName];
+_response = str (_params call fn_kitLoad);
+
+diag_log _response;
+hint format ["%1", _response];

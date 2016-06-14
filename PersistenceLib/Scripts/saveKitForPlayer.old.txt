@@ -1,0 +1,56 @@
+﻿fn_arrayToString = {
+    _return = _this joinString ",";
+	_return;
+};
+
+fn_kitSave = {
+	params["_unit", "_kitName"];
+
+	_id = getPlayerUID _unit;
+
+	_headgear = headgear _unit; 
+	_goggles = goggles _unit; 
+	_uniform = uniform _unit; 
+	_vest = vest _unit; 
+	_backpack = backpack _unit; 
+	_primaryWeapon = primaryWeapon _unit; 
+	_secondaryWeapon = secondaryWeapon _unit; 
+	_handgunWeapon = handgunWeapon _unit; 
+	_assignedItems = assignedItems _unit; 
+	 
+	_uniformItems = uniformItems _unit; 
+	_vestItems = vestItems _unit; 
+	_backpackItems = backpackItems _unit; 
+	_primaryWeaponItems = primaryWeaponItems _unit; 
+	_secondaryWeaponItems = secondaryWeaponItems _unit; 
+	_handgunItems = handgunItems _unit; 
+	
+	_details =  "fn_kitAddHeadgear=" + _headgear + "|" + 
+				"fn_kitAddGoggles=" + _goggles + "|" +
+				"fn_kitAddUniform=" + _uniform + "|" +
+				"fn_kitAddVest=" + _vest + "|" +
+				"fn_kitAddBackpack=" + _backpack + "|" +
+				"fn_kitAddWeapon=" + _primaryWeapon + "|" +
+				"fn_kitAddWeapon=" + _secondaryWeapon + "|" +
+				"fn_kitAddWeapon=" + _handgunWeapon + "|" +
+				"fn_kitAddHandgunItems=" + str (_handgunItems call fn_arrayToString) + "|" +
+				"fn_kitAddSecondaryWeaponItems=" + str (_secondaryWeaponItems call fn_arrayToString) + "|" +
+				"fn_kitAddPrimaryWeaponItems=" + str (_primaryWeaponItems call fn_arrayToString) + "|" +
+				"fn_kitAddAssignedItems=" + str (_assignedItems call fn_arrayToString) + "|" +
+				"fn_kitAddUniformItems=" + str (_uniformItems call fn_arrayToString) + "|" +
+				"fn_kitAddVestItems=" + str (_vestItems call fn_arrayToString) + "|" +
+				"fn_kitAddBackpackItems=" + str (_backpackItems call fn_arrayToString);
+	
+	_response = "PersistenceLib" callExtension "saveKit " + _id + "~" + _kitName + "~" + _details;
+
+	_response;
+};
+
+private _unit = player;
+private _kitName = "tempKit";
+
+_params = [_unit, _kitName];
+_response = str (_params call fn_kitSave);
+
+diag_log _response;
+hint format ["%1", _response];
