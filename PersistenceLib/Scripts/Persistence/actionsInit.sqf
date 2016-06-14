@@ -1,0 +1,2 @@
+_this addAction ["Save", "persistenceScripts\actionSaveKit.sqf", [_this, "testKit"], 0, false, false, "", "(_target == _this)"];
+_this addAction ["Load", "persistenceScripts\actionLoadKit.sqf", [_this, "testKit"], 0, false, false, "", "(_target == _this)"];
