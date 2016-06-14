@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PersistenceLib
 {
-    class DBConnect
+    class DBConnect : IDisposable
     {
         private MySqlConnection connection;
         private String server;
@@ -33,6 +33,11 @@ namespace PersistenceLib
             this.password = config.GetAppSetting("password");
             string connectionString = "SERVER=" + this.server + ";" + "DATABASE=" + this.database + ";" + "UID=" + this.username + ";" + "PASSWORD=" + this.password + ";";
             this.connection = new MySqlConnection(connectionString);
+        }
+
+        public void Dispose()
+        {
+            this.connection.Close();
         }
 
         // Open MySql connection
@@ -89,7 +94,7 @@ namespace PersistenceLib
             return null;
         }
 
-        //Count statement
+        // Count statement
         public int Count(String query)
         {
             int count = -1;
@@ -104,7 +109,7 @@ namespace PersistenceLib
             return count;
         }
 
-
+        // Select statement
         public List<List<String>> Select(String query)
         {
             List<List<String>> result = new List<List<String>>();
@@ -131,6 +136,5 @@ namespace PersistenceLib
 
             return null;
         }
-
     }
 }
