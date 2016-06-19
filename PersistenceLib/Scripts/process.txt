@@ -10,3 +10,26 @@
 // Add uniform items
 // Add vest items
 // Add backpack items
+
+
+
+
+
+
+
+
+
+// Script to:
+// take in class or name?
+// get players object of class
+// create array of items including sub items
+// return that
+
+
+// Using previous script:
+// Putting bag in box
+// Get player bag
+// Get contents of bag
+// Remove bag
+// Add new bag to box
+// Add items to box

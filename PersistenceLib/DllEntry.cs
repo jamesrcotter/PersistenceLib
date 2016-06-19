@@ -38,10 +38,16 @@ namespace PersistenceLib
                 switch (command)
                 {
                     case "saveKit":
-                        output.Append(Kits.SaveKit(arguments));
+                        output.Append(Kits.Save(arguments));
                         break;
                     case "loadKit":
-                        output.Append(Kits.LoadKit(arguments));
+                        output.Append(Kits.Load(arguments));
+                        break;
+                    case "saveContainer":
+                        output.Append(Containers.Save(arguments));
+                        break;
+                    case "loadContainer":
+                        output.Append(Containers.Load(arguments));
                         break;
                     default:
                         output.Append("ERROR: Unknown command " + command);

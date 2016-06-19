@@ -9,23 +9,23 @@ namespace PersistenceLib
 {
     public static class Kits
     {
-        public static String SaveKit(String arguments)
+        public static String Save(String arguments)
         {
             DBConnect db = new DBConnect();
 
-            String[] values = prepareArguments(arguments);
+            String[] values = Utils.PrepareArguments(arguments);
             String playerId = values[0];
             String kitName = values[1];
             String gearList = values[2];
 
             long? result;
-            if (kitExists(db, playerId, kitName))
+            if (exists(db, playerId, kitName))
             {
-                result = updateKit(db, playerId, kitName, gearList);
+                result = update(db, playerId, kitName, gearList);
             }
             else
             {
-                result = insertKit(db, playerId, kitName, gearList);
+                result = insert(db, playerId, kitName, gearList);
             }
 
             if (result != null)
@@ -38,11 +38,11 @@ namespace PersistenceLib
             }
         }
 
-        public static String LoadKit(String arguments)
+        public static String Load(String arguments)
         {
             DBConnect db = new DBConnect();
 
-            String[] values = prepareArguments(arguments);
+            String[] values = Utils.PrepareArguments(arguments);
             String playerId = values[0];
             String kitName = values[1];
 
@@ -58,12 +58,7 @@ namespace PersistenceLib
             return null;
         }
 
-        private static String[] prepareArguments(String arguments)
-        {
-            return arguments.Replace("\"", "").Split('~');
-        }
-
-        private static bool kitExists(DBConnect db, String playerId, String kitName)
+        private static bool exists(DBConnect db, String playerId, String kitName)
         {
             string query = string.Format("SELECT * FROM players WHERE playerId = '{0}' AND kitName = '{1}';", playerId, kitName);
             List<List<String>> result = db.Select(query);
@@ -75,14 +70,14 @@ namespace PersistenceLib
             return false;
         }
 
-        private static long? insertKit(DBConnect db, String playerId, String kitName, String gearList)
+        private static long? insert(DBConnect db, String playerId, String kitName, String gearList)
         {
             Trace.TraceInformation("Inserting kit for " + playerId + " / " + kitName + ".");
             String query = string.Format("INSERT INTO players (playerId, kitName, gearList) VALUES ('{0}', '{1}', '{2}');", playerId, kitName, gearList);
             return db.Insert(query);
         }
 
-        private static long? updateKit(DBConnect db, String playerId, String kitName, String gearList)
+        private static long? update(DBConnect db, String playerId, String kitName, String gearList)
         {
             Trace.TraceInformation("Updating kit for " + playerId + " / " + kitName + ".");
             String query = string.Format("UPDATE players SET kitName = '{0}', gearList = '{1}' WHERE playerId = '{2}';", kitName, gearList, playerId);
