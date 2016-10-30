@@ -10,7 +10,7 @@ namespace PersistenceLib
     {
         public static String[] PrepareArguments(String arguments)
         {
-            return arguments.Replace("\"", "").Split('~');
+            return arguments.Split('~');
         }
     }
 }
